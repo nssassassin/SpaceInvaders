@@ -72,10 +72,10 @@ public class Shooter extends DefaultCritter{
 
     public void moveShooter() {
         //first the base movement
-        if(moveRight){
+        if(moveRight&&getX()<1-getSize()){
             super.setSpeedX(DefaultCritter.shooterSpeed);
         }
-        else if(moveLeft){
+        else if(moveLeft&&getX()>-1 + getSize()){
             super.setSpeedX(-DefaultCritter.shooterSpeed);
         }
         else {
