@@ -39,7 +39,9 @@ public class Enemy extends DefaultCritter{
         StdDraw.picture(super.getX(),super.getY(), "ufo-42453_1280.png",super.getSize()*2,super.getSize()*2);
     }
 
-
+    public void setHitPoints(int hitPoints) {
+        this.hitPoints = hitPoints;
+    }
 }
 /*
 https://www.needpix.com/photo/33309/ufo-spaceship-science-alien-fantasy-universe-technology-spacecraft-flying

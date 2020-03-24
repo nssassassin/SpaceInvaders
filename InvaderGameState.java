@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class InvaderGameState {
 
+
     public static void ThrowTheMenu(boolean menuRunning){
         while(menuRunning) {
 
@@ -28,6 +29,8 @@ public class InvaderGameState {
                 Invaders.menuRunning = false;
                 menuRunning = false;
                 Invaders.isRunning = true;
+                Invaders.level = 1;
+                Invaders.winOrLose = 0;
             }
             if(StdDraw.isKeyPressed(KeyEvent.VK_Q)){
                 StdOut.println("Exit game and system");
@@ -37,6 +40,7 @@ public class InvaderGameState {
             StdDraw.pause(20);
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void ThrowEndScreen(boolean endScreen){
         while(endScreen){
             StdDraw.enableDoubleBuffering();
@@ -53,7 +57,7 @@ public class InvaderGameState {
                 break;
             }
             StdDraw.text(0, 0.5, Invaders.EndCredits);
-            StdDraw.text(0,0.2,"Score: " + Invaders.myScore);
+            StdDraw.text(0,0.2,"Score: " + ((Invaders.myScore3+ Invaders.myScore2+ Invaders.myScore1)));
             StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
             StdDraw.text(0,-0.2,"Press Space");
             StdDraw.text(0,-0.4,"to continue");
@@ -72,8 +76,12 @@ public class InvaderGameState {
         }
 
     }
-
-    public static void drawTheGame(Enemy enemy, Shooter shooter, ArrayList<Missile> missiles, ArrayList<Bombs> bombs,  Critter[] critters) {
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static void drawTheGame(Enemy enemy,
+                                   Shooter shooter,
+                                   ArrayList<Missile> missiles,
+                                   ArrayList<Bombs> bombs,
+                                   Critter[] critters) {
 
 
         StdDraw.setXscale(-1.0, 1.0);
@@ -94,6 +102,7 @@ public class InvaderGameState {
                     StdOut.println("Detected hit");
                     missiles.remove(j);
                     bombs.remove(i);
+                    StdAudio.play("explosion.wav");
                     StdOut.println("Removed Bomb and missile");
                     count = count + 1;
                     System.out.println(count);
@@ -135,17 +144,17 @@ public class InvaderGameState {
 
         if(enemy.getHitPoints() == 0){
             Invaders.winOrLose = 1;
-            StdOut.println("Game won");
+            StdOut.println("Game " + Invaders.level  + " won");
             Invaders.isRunning = false;
-            Invaders.endMenu = true;
-
+            if(Invaders.level==3)Invaders.endMenu = true;
         }//    if enemy dies
+
         if(shooter.getLives()==0){
             Invaders.winOrLose = 2;
             StdOut.println("Game Lost");
             Invaders.isRunning = false;
             Invaders.endMenu = true;
-        }
+        }//if You die
 
 
         //drop random bombs at enemy location
@@ -171,13 +180,7 @@ public class InvaderGameState {
         else{
             shooter.setAngleMinus(false);
         }
-        /*
-        if(StdDraw.isKeyPressed(83)){
-            shooter.setAngleMinus(false);
-            shooter.setAnglePlus(false);
-            //d is 68
-        }
-         */
+
         if(StdDraw.isKeyPressed(87)){
             if(System.currentTimeMillis() >= Invaders.previousMissileTime + DefaultCritter.MissileDelay) {
 
@@ -231,7 +234,10 @@ public class InvaderGameState {
             missiles.get(g).action();
 
             //Remove missiles offscreen
-            if(missiles.get(g).getMissilesYTop()>=1|| missiles.get(g).getMissilesXMax()>=1 || missiles.get(g).getMissilesXMin()<=-1) {
+            if(     missiles.get(g).getMissilesYTop()>=1||
+                    missiles.get(g).getMissilesXMax()>=1 ||
+                    missiles.get(g).getMissilesXMin()<=-1) {
+
                 missiles.remove(g);
 
             }
@@ -251,6 +257,8 @@ public class InvaderGameState {
             if(shooter.hitBomb(bombs.get(i))){
                 bombs.remove(i);
                 shooter.removeLives();
+                StdAudio.play("explosion.wav");
+
             }
         }
 
@@ -312,13 +320,23 @@ public class InvaderGameState {
 
 
         }
-        if (((critters[critters.length-1].getX() >= (1 - critters[critters.length-1].getSizeCritter()))) && (critters[critters.length-1].getSpeedX() > 0)) {
+        if (((critters[critters.length-1].getX() >= (1 - critters[critters.length-1].getSizeCritter()))) &&
+                (critters[critters.length-1].getSpeedX() > 0)) {
 
             for (int l = 0; l < critters.length; l++) {
                 critters[l].setSpeedX(-critters[l].getSpeedX());
                 critters[l].setY(critters[l].getY()-2*critters[l].getSizeCritter());
             }
         }
+        for(int i=0;i<critters.length;i++){
+            if((critters[i].getY()-critters[i].getSize()<=-1+critters[i].getSize())&&!critters[i].isKilled()){
+                Invaders.winOrLose = 2;
+                StdOut.println("Game Lost");
+                Invaders.isRunning = false;
+                Invaders.endMenu = true;
+            }
+        }
+
 
 
 
@@ -336,9 +354,23 @@ public class InvaderGameState {
         StdDraw.setPenColor(StdDraw.RED);
         StdDraw.setFont();
         StdDraw.textRight(0.95, 1.1, "Enemy Hitpoints: " + enemy.getHitPoints());
-        Invaders.myScore = (myCounter*1000 + 100*(1000 - enemy.getHitPoints()));
-        StdDraw.textLeft(-0.95,1.1, "Score: " + Invaders.myScore);
-        StdDraw.text(0, 1.1, "Lives: " + shooter.getLives());
+        Invaders.myCurrentScore = (myCounter*1000 + 100*(DefaultCritter.enemyHitPoints*Invaders.level - enemy.getHitPoints()));
+        StdDraw.textLeft(-0.95,1.1, "Score: " + Invaders.myCurrentScore);
+        StdDraw.text(0, 1.1, "Level " + Invaders.level);
+        switch (Invaders.level){
+            case 1:
+                Invaders.myScore1 = Invaders.myCurrentScore;
+                break;
+            case 2:
+                Invaders.myScore2 = Invaders.myCurrentScore;
+                break;
+            case 3:
+                Invaders.myScore3 = Invaders.myCurrentScore;
+                break;
+        }
+
+
+        StdDraw.text(-0.35, 1.1, "Lives: " + shooter.getLives());
 
 
         StdDraw.show();
@@ -355,5 +387,9 @@ public class InvaderGameState {
 /*
         Background used https://www.publicdomainpictures.net/en/view-image.php?image=270151&picture=cosmos-background
         License: CC0 Public Domain
+
+
 */
+
+
 
