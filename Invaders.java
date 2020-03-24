@@ -19,6 +19,7 @@ public class Invaders {
     public static void main(String[] args) {
 
         //print default values
+        /*
         StdOut.println("Enemy Size; " + DefaultCritter.enemySize);
         StdOut.println("Critter Size; " + DefaultCritter.critterSize);
         StdOut.println("Critter Speed; " + DefaultCritter.critterSpeed);
@@ -34,7 +35,8 @@ public class Invaders {
         StdOut.println("Enemy HitPoints; " + DefaultCritter.enemyHitPoints);
         StdOut.println("Shooter Turn Speed; " + DefaultCritter.shooterTurnSpeed);
         StdOut.println("Lives; " + DefaultCritter.lives);
-
+        */
+        StdAudio.loop("TremLoadingloopl.wav");
 
 
 
@@ -42,7 +44,10 @@ public class Invaders {
         while(true) {
 
 
+
+
             InvaderGameState.ThrowTheMenu(menuRunning);
+
             myScore1 = 0;
             myScore2 = 0;
             myScore3 = 0;
@@ -58,9 +63,8 @@ public class Invaders {
 
                 ArrayList<Bombs> newBomb = new ArrayList<Bombs>();
 
-                winOrLose = 0;
-                previousMissileTime = 0;
-                myCurrentScore = 0;
+
+
 
 
 
@@ -72,9 +76,11 @@ public class Invaders {
                     }
                 }
 
-                /////////////////////////////////////////////////////////////////////////////
-                isRunning = true;
-
+                /////////////////////////////////////////////
+                if(winOrLose!=0) isRunning = true;
+                winOrLose = 0;
+                previousMissileTime = 0;
+                myCurrentScore = 0;
                 while (isRunning) {
                     InvaderGameState.drawTheGame(newEnemy, newShooter, newMissile, newBomb, newCritter);
 
@@ -85,7 +91,7 @@ public class Invaders {
 
             }
             ///////////////////////////////////////
-            InvaderGameState.ThrowEndScreen(endMenu);
+            InvaderGameState.ThrowEndScreen(); //throw the last screen
 
         }
 

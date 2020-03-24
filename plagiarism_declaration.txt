@@ -1,0 +1,96 @@
+This declaration is applicable to Project: Cosmic Conquistadors of Computer Science E214 in 2020
+
+By including this document as part of my assignment submission, we, 
+Willem Cornelis Rossouw, (Student number 22823700)
+Frans Kamtalele Shikulo, (Student number 22679375)
+declare the following:
+
+[BEGIN DECLARATION]
+Stellenbosch University Computer Science Assignment Declaration 
+---------------------------------------------------------------
+ 
+We know that using another person’s ideas (including written work and source
+code) and claiming them as our own constitutes plagiarism. We are aware that the
+potential penalties for this offence, as specified in the university’s policy
+on academic integrity, may include expulsion from the university and other
+serious consequences. 
+ 
+1. This submission is entirely our own work, excepting the inclusion of
+resources explicitly permitted for this assignment, and assistance as noted in
+the following item. 
+
+2. Our submission acknowledges the source of all libraries and external sources
+used, and identifies any other students and/or staff (including demis, tutors,
+and lecturers) with whom we have discussed this assignment, as well as the
+extent of those discussions. Students and staff who helped any of us, or whom any of us
+helped, with debugging, are specifically listed, as well as what portions
+of the code were involved.  (Note that, unless explicitly stated otherwise,
+submissions or solutions to assignments in previous courses at this university
+or any other educational institution which correspond to (significant portions
+of) this assignment may not be used as external sources. ­In particular, do not
+look at or use solutions to assignments from previous years.) 
+
+3. We have not allowed, and will not in the future allow, anyone to copy any
+portion of our work, or give them access to it in any way, since they may have
+the intention of passing it off as their own work (whether as is, or in a
+modified form).  In addition, we will not make my work publicly available in any
+way, including posting our code in public source code repositories or forums.
+(You may, however, allow someone to look at selected portions of your code for
+the purposes of debugging, but you may not make the code available to them
+otherwise.) 
+
+4. We have not and will not facilitate plagiarism, such as by distributing any
+written work or source code created by fellow students. 
+
+5. We understand that any code we submit may be inspected for plagiarism
+detection (either manually or by automated systems) and be retained for
+detecting plagiarism in other courses. 
+[END DECLARATION]
+
+Acknowledgement of sources
+--------------------------
+
+<Provide details as required here>
+Images for characters:
+
+Shooter:
+https://publicdomainvectors.org/en/free-clipart/Top-view-of-supersonic-aircraft-vector-clip-art/11866.html
+Public domain
+
+Critter:
+https://freesvg.org/funny-green-monster
+OpenClipart
+SVG ID: 67049
+License: Public Domain
+
+Bombs:
+https://pixabay.com/vectors/nuclear-warhead-bomb-atomic-weapon-36817/
+Picture of bomb, slightly modified
+Pixabay License
+Free for commercial use
+No attribution required
+
+Background:
+https://www.publicdomainpictures.net/en/view-image.php?image=270151&picture=cosmos-background
+License: CC0 Public Domain
+
+Sounds:
+
+Bomb Hit
+https://freesound.org/people/RSilveira_88/sounds/216273/
+https://creativecommons.org/licenses/by/3.0/
+
+Shooting of missile:
+https://freesound.org/people/MusicLegends/sounds/344310/
+https://creativecommons.org/licenses/by/3.0/
+
+Dropping of Bomb:
+https://freesound.org/people/MATTIX/sounds/415990/
+https://creativecommons.org/licenses/by/3.0/
+
+Background music:
+https://opengameart.org/content/loading-screen-loop
+License: CC0 Public Domain
+
+
+All sounds were modified, to make them slightly softer, using audacity

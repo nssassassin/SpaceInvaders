@@ -7,6 +7,7 @@ public class InvaderGameState {
     public static void ThrowTheMenu(boolean menuRunning){
         while(menuRunning) {
 
+
             StdDraw.setXscale(-1.0, 1.0);
             StdDraw.setYscale(-1.0, 1.2);
             StdDraw.enableDoubleBuffering();
@@ -18,19 +19,20 @@ public class InvaderGameState {
             StdDraw.text(0.0, 0.8, "Space Destroyers");
 
             StdDraw.setFont(DefaultCritter.font2);
-            StdDraw.text(0,0.2,"Press Enter to continue");
+            StdDraw.text(0,0.2,"Press Space to continue");
             StdDraw.text(0,0,"Shoot (w)");
             StdDraw.text(0,-0.2,"Rotate: Left (a), Right (d), Release to stop");
             StdDraw.text(0,-0.4,"Move: Left (z), Right (c), Release to stop");
             StdDraw.text(0,-0.6,"Quit (q), in game q will end game and return to menu");
             StdDraw.text(0,-0.8, "ScreenCapture (q)");
 
-            if(StdDraw.isKeyPressed(KeyEvent.VK_ENTER)){
+            if(StdDraw.isKeyPressed(KeyEvent.VK_SPACE)){
                 Invaders.menuRunning = false;
                 menuRunning = false;
                 Invaders.isRunning = true;
                 Invaders.level = 1;
                 Invaders.winOrLose = 0;
+                //StdAudio.close();
             }
             if(StdDraw.isKeyPressed(KeyEvent.VK_Q)){
                 StdOut.println("Exit game and system");
@@ -41,39 +43,31 @@ public class InvaderGameState {
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static void ThrowEndScreen(boolean endScreen){
-        while(endScreen){
-            StdDraw.enableDoubleBuffering();
-            StdDraw.clear(StdDraw.BLACK);
-            StdDraw.setFont(DefaultCritter.font);
-            StdDraw.setPenColor(StdDraw.WHITE);
-            StdDraw.picture(0, 0.1, "cosmos-background.jpg", 2, 2.2);
-            switch (Invaders.winOrLose){
-                case 0: Invaders.EndCredits = "QUIT";
+    public static void ThrowEndScreen(){ //boolean endScreen
+        //while(endScreen){
+        StdDraw.clear();
+        StdDraw.enableDoubleBuffering();
+        StdDraw.clear(StdDraw.BLACK);
+        StdDraw.setFont(DefaultCritter.font);
+        StdDraw.setPenColor(StdDraw.WHITE);
+        StdDraw.picture(0, 0.1, "cosmos-background.jpg", 2, 2.2);
+        switch (Invaders.winOrLose){
+            case 0: Invaders.EndCredits = "QUIT";
                 break;
-                case 1: Invaders.EndCredits = "WON";
+            case 1: Invaders.EndCredits = "WON";
                 break;
-                case 2: Invaders.EndCredits = "LOSS";
+            case 2: Invaders.EndCredits = "LOSS";
                 break;
-            }
-            StdDraw.text(0, 0.5, Invaders.EndCredits);
-            StdDraw.text(0,0.2,"Score: " + ((Invaders.myScore3+ Invaders.myScore2+ Invaders.myScore1)));
-            StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-            StdDraw.text(0,-0.2,"Press Space");
-            StdDraw.text(0,-0.4,"to continue");
-
-
-
-            if(StdDraw.isKeyPressed(KeyEvent.VK_SPACE)){
-                Invaders.menuRunning = true;
-                endScreen = false;
-            }
-            StdDraw.show();
-            StdDraw.pause(20);
-
-
-
         }
+        StdDraw.text(0, 0.5, Invaders.EndCredits);
+        StdDraw.text(0,0.2,"Score: " + ((Invaders.myScore3+ Invaders.myScore2+ Invaders.myScore1)));
+        StdDraw.show();
+        StdDraw.pause(DefaultCritter.timeDelayEnd);
+        Invaders.menuRunning = true;
+
+
+
+
 
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,14 +186,14 @@ public class InvaderGameState {
 
             //w is 87
         }
-        if(StdDraw.isKeyPressed(90)){
+        if(StdDraw.isKeyPressed(KeyEvent.VK_Z)){
             shooter.setMoveLeft(true);
             //z is 90
         }
         else{
             shooter.setMoveLeft(false);
         }
-        if(StdDraw.isKeyPressed(67)){
+        if(StdDraw.isKeyPressed(KeyEvent.VK_C)){
             shooter.setMoveRight(true);
             //c is 67
         }
@@ -207,25 +201,16 @@ public class InvaderGameState {
             shooter.setMoveRight(false);
         }
 
-        if(StdDraw.isKeyPressed(81)){
+        if(StdDraw.isKeyPressed(KeyEvent.VK_Q)){
             Invaders.winOrLose = 0;
             Invaders.isRunning = false;
             Invaders.endMenu = true;
 
 
         }
-        if(StdDraw.isKeyPressed(80)){
+        if(StdDraw.isKeyPressed(KeyEvent.VK_P)){
             StdDraw.save("screenshot.png");
         }
-
-
-        //s is 83
-        //x is 88
-        //q is 81
-        //p is 80
-
-
-
 
 
         //draw missiles and move and execute logic
@@ -261,6 +246,20 @@ public class InvaderGameState {
 
             }
         }
+        //shooter check if hit by critters
+        for(int i = 0;i<critters.length;i++){
+            if(!critters[i].isKilled()&&critters[i].getY()-critters[i].getSize()<=shooter.getY()+shooter.getY()&&
+                    ((shooter.getX()-shooter.getSize() <=  critters[i].getX()+critters[i].getSize()&&
+                            shooter.getX()-shooter.getSize()>=critters[i].getX()-critters[i].getSize())||
+                            ((shooter.getX()+shooter.getSize()>=critters[i].getX()-critters[i].getSize())&&
+                                    (shooter.getX()+shooter.getSize()<=critters[i].getX()+critters[i].getSize())) )   ){
+                Invaders.winOrLose = 2;
+                StdOut.println("Game Lost");
+                Invaders.isRunning = false;
+                Invaders.endMenu = true;
+            }
+        }
+
 
         //Draw the critters
         for (int i = 0; i < critters.length; i++) {

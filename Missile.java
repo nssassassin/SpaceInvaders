@@ -2,9 +2,11 @@ public class Missile extends DefaultCritter{
 
 
     public Missile(double xInput, double yInput, double angleInput) {
-        super(xInput,yInput, Math.cos(Math.toRadians( angleInput))*DefaultCritter.missileSpeed, Math.sin(Math.toRadians(angleInput))*DefaultCritter.missileSpeed, DefaultCritter.missileSize);
-
-
+        super(  xInput,
+                yInput,
+                Math.cos(Math.toRadians( angleInput))*DefaultCritter.missileSpeed,
+                Math.sin(Math.toRadians(angleInput))*DefaultCritter.missileSpeed,
+                DefaultCritter.missileSize);
     }
 
     /*The following code makes the private code accessible
