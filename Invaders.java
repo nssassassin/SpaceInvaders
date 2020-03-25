@@ -39,6 +39,7 @@ public class Invaders {
             myScore1 = 0;
             myScore2 = 0;
             myScore3 = 0;
+            level = 1;
             ////////////////////////////////////////////
             while(level<DefaultCritter.levels+1&&winOrLose!=2) {
 
@@ -77,7 +78,7 @@ public class Invaders {
             ///////////////////////////////////////
             InvaderGameState.ThrowEndScreen(); //throw the last screen
 
-        }
+        }//game loop
 
 
 
