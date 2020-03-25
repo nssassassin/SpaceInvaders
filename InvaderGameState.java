@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -16,15 +17,38 @@ public class InvaderGameState {
             StdDraw.picture(0, 0.1, "cosmos-background.jpg", 2, 2.2);
 
             StdDraw.setFont(DefaultCritter.font);
-            StdDraw.text(0.0, 0.8, "Space Destroyers");
+            StdDraw.text(0.0, 0.8, "Cosmic Conquistadors");
 
             StdDraw.setFont(DefaultCritter.font2);
-            StdDraw.text(0,0.2,"Press Space to continue");
-            StdDraw.text(0,0,"Shoot (w)");
-            StdDraw.text(0,-0.2,"Rotate: Left (a), Right (d), Release to stop");
-            StdDraw.text(0,-0.4,"Move: Left (z), Right (c), Release to stop");
-            StdDraw.text(0,-0.6,"Quit (q), in game q will end game and return to menu");
-            StdDraw.text(0,-0.8, "ScreenCapture (p)");
+            StdDraw.text(0,0.6,"Press Space to continue");
+            StdDraw.text(0,0.5,"Shoot (w)");
+            StdDraw.text(0,0.4,"Rotate: Left (a), Right (d), Release to stop");
+            StdDraw.text(0,0.3,"Move: Left (z), Right (c), Release to stop");
+            StdDraw.text(0,0.2,"Quit (q), in game q will end game and return to menu");
+            StdDraw.text(0,0.1, "ScreenCapture (p)");
+            String text1;
+            if(Invaders.multiPlayer){
+                text1 = "Enabled";
+            }
+            else text1 = "Disabled";
+            StdDraw.text(0,0, "MultiPlayer (m = enable, n = disable)" );
+            if(!Invaders.multiPlayer){
+                StdDraw.setPenColor(Color.RED);
+            }
+            else{
+                StdDraw.setPenColor(Color.GREEN);
+
+                StdDraw.text(0,-0.3,"Shoot (y)");
+                StdDraw.text(0,-0.4,"Rotate: Left (g), Right (j), Release to stop");
+                StdDraw.text(0,-0.5,"Move: Left (b), Right (m), Release to stop");
+            }
+
+            StdDraw.text(0, -0.1, "MultiPlayer: " + text1);
+            StdDraw.setFont();
+            StdDraw.setPenColor(Color.WHITE);
+            StdDraw.text(0, -0.9, "Only player 1 can get PowerUps and get killed");
+            StdDraw.text(0, -0.95, "Players share lives");
+            StdDraw.text(0, -0.9, "");
 
             if(StdDraw.isKeyPressed(KeyEvent.VK_SPACE)){
                 Invaders.menuRunning = false;
@@ -32,8 +56,16 @@ public class InvaderGameState {
                 Invaders.isRunning = true;
                 Invaders.level = 1;
                 Invaders.winOrLose = 0;
-                //StdAudio.close();
             }
+            if(StdDraw.isKeyPressed(KeyEvent.VK_M)){
+
+                    Invaders.multiPlayer = true;
+            }
+            if(StdDraw.isKeyPressed(KeyEvent.VK_N)){
+
+                    Invaders.multiPlayer = false;
+            }
+
             if(StdDraw.isKeyPressed(KeyEvent.VK_Q)){
                 StdOut.println("Exit game and system");
                 System.exit(0);
@@ -76,7 +108,8 @@ public class InvaderGameState {
                                    ArrayList<Missile> missiles,
                                    ArrayList<Bombs> bombs,
                                    Critter[] critters,
-                                   ArrayList<Bunkers> bunkers) {
+                                   ArrayList<Bunkers> bunkers,
+                                   Shooter shooter2) {
 
 
         StdDraw.setXscale(-1.0, 1.0);
@@ -198,7 +231,55 @@ public class InvaderGameState {
             // StdOut.println("Bombs: " + bombs.size());
 
         }
+        //second shooter logic
+        if(Invaders.multiPlayer){
+            shooter2.drawShooter();
+            shooter2.moveShooter();
 
+            if(StdDraw.isKeyPressed(KeyEvent.VK_G)){
+                shooter2.setAnglePlus(true);
+                //j
+            }
+            else{
+                shooter2.setAnglePlus(false);
+            }
+            if(StdDraw.isKeyPressed(KeyEvent.VK_J)){
+                shooter2.setAngleMinus(true);
+                //g
+            }
+            else{
+                shooter2.setAngleMinus(false);
+            }
+
+            if(StdDraw.isKeyPressed(KeyEvent.VK_Y)){
+                if(System.currentTimeMillis() >= Invaders.previousMissileTime2 + Invaders.missileTime) {
+
+                    missiles.add(new Missile(shooter2.getX(), shooter2.getY(), shooter2.getAngleOfGun()));
+                    StdAudio.play("344310__musiclegends__laser-shoot.wav");
+                    Invaders.previousMissileTime2 = System.currentTimeMillis();
+
+                }
+
+                //y
+            }
+            if(StdDraw.isKeyPressed(KeyEvent.VK_B)){
+                shooter2.setMoveLeft(true);
+                //b
+            }
+            else{
+                shooter2.setMoveLeft(false);
+            }
+            if(StdDraw.isKeyPressed(KeyEvent.VK_M)){
+                shooter2.setMoveRight(true);
+                //m
+            }
+            else{
+                shooter2.setMoveRight(false);
+            }
+        }
+
+
+        ////////////////////////////////////////////////////////////
         //Shooter logic
         if(StdDraw.isKeyPressed(65)){
             shooter.setAnglePlus(true);
@@ -251,7 +332,7 @@ public class InvaderGameState {
         if(StdDraw.isKeyPressed(KeyEvent.VK_P)){
             StdDraw.save("screenshot.png");
         }
-
+        //////////////////////////////////////
         //draw bunkers
         for(int i=0;i<bunkers.size();i++){
             bunkers.get(i).drawBunkers();
@@ -295,7 +376,7 @@ public class InvaderGameState {
 
         //shooter check if hit by bombs
         for(int i = 0; i < bombs.size(); i++){
-            if(shooter.hitBomb(bombs.get(i))){
+            if(shooter.hitBomb(bombs.get(i))||shooter2.hitBomb(bombs.get(i))){
                 bombs.remove(i);
                 shooter.removeLives();
                 StdAudio.play("explosion.wav");

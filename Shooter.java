@@ -37,6 +37,10 @@ public class Shooter extends DefaultCritter{
         return lives;
     }
 
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
     public void removeLives(){
         lives--;
     }
