@@ -54,13 +54,13 @@ public class Shooter extends DefaultCritter{
     public void moveShooter() {
         //first the base movement
         if(moveRight&&getX()<1-getSize()){
-            super.setSpeedX(Invaders.tempSpeed);
+            setSpeedX(Invaders.tempSpeed);
         }
         else if(moveLeft&&getX()>-1 + getSize()){
-            super.setSpeedX(-Invaders.tempSpeed);
+            setSpeedX(-Invaders.tempSpeed);
         }
         else {
-            super.setSpeedX(0);
+            setSpeedX(0);
         }
         // Now Turn the turret
         if (anglePlus){
@@ -77,7 +77,7 @@ public class Shooter extends DefaultCritter{
         }
 
 
-        super.action();
+        action();
 
     }
 
@@ -86,10 +86,12 @@ public class Shooter extends DefaultCritter{
     }
 
     public boolean hitBomb(Bombs bomb1){
-        if( bomb1.getBombYBottom()>=super.getY()- super.getSize()&&
-            bomb1.getBombYBottom()<=super.getY()+super.getSize()&&
-            bomb1.getX()>=super.getX()-super.getSize()&&
-            bomb1.getX()<=super.getX()+super.getSize()){
+        if( bomb1.getBombYBottom()>=getY()- getSize()&&
+                bomb1.getBombYBottom()<=getY()+getSize()&&
+                (((bomb1.getX()-bomb1.getSize() <=  getX()+getSize()&&
+                        bomb1.getX()-bomb1.getSize()>=getX()-getSize())||
+                        ((bomb1.getX()+bomb1.getSize()>=getX()-getSize())&&
+                                (bomb1.getX()+bomb1.getSize()<=getX()+getSize())) ))){
             return true;
         }
         else return false;

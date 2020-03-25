@@ -30,6 +30,7 @@ public class Invaders {
 
 
         while(true) {
+            StdDraw.setCanvasSize(600,600);
 
 
 
@@ -47,18 +48,21 @@ public class Invaders {
                 newEnemy.setHitPoints(DefaultCritter.enemyHitPoints*level);
                 Shooter newShooter = new Shooter(-0, -1 + DefaultCritter.shooterSize);
                 Critter[] newCritter = new Critter[DefaultCritter.critterCount * level];
-
                 ArrayList<Missile> newMissile = new ArrayList<Missile>();
-
                 ArrayList<Bombs> newBomb = new ArrayList<Bombs>();
 
+                //new bunkers 3
+                ArrayList<Bunkers> newBunkers = new ArrayList<Bunkers>();
+                for(int i=0;i<3;i++){
+                    newBunkers.add(new Bunkers(i*0.5-0.5,-0.6));
+                }
                 //create critter array
                 for (int k = 0; k < DefaultCritter.critterCount * level / 7; k++) {
                     for (int j = 0; j < 7; j++) {
                         newCritter[(j + k * 7)] = new Critter((-1+2*DefaultCritter.critterSize + 2 * DefaultCritter.critterSize * j), (1 - 2 * DefaultCritter.enemySize - DefaultCritter.critterSize - 2 * DefaultCritter.critterSize * k));
                     }
                 }
-                /////////////////////////////////////////////
+                ///////////////////////////////////////////// Reset
                 if(winOrLose!=0) isRunning = true;
                 winOrLose = 0;
                 previousMissileTime = 0;
@@ -67,8 +71,10 @@ public class Invaders {
                 powerUpTime = 0;
                 tempSpeed = DefaultCritter.shooterSpeed;
                 missileTime = DefaultCritter.MissileDelay;
+                /////////////////////////////////////////////game loop
+
                 while (isRunning) {
-                    InvaderGameState.drawTheGame(newEnemy, newShooter, newMissile, newBomb, newCritter);
+                    InvaderGameState.drawTheGame(newEnemy, newShooter, newMissile, newBomb, newCritter, newBunkers);
 
                 }
                 StdOut.println(level + " "+ winOrLose + myScore1 + " "+ myScore2 + " "+ myScore3 );

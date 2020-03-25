@@ -15,18 +15,18 @@ public class Missile extends DefaultCritter{
 
 
     public double getMissilesYTop() {
-        return (super.getY() + super.getSize());
+        return (getY() + getSize());
     }
 
-    public double getMissilesXMax() { return super.getX() + super.getSize();}
+    public double getMissilesXMax() { return getX() + getSize();}
 
-    public double getMissilesXMin() { return super.getX() - super.getSize();}
+    public double getMissilesXMin() { return getX() - getSize();}
 
 
 
     public void drawMissile(){
         StdDraw.setPenColor(StdDraw.MAGENTA);
-        StdDraw.filledCircle(super.getX(),super.getY(),super.getSize());
+        StdDraw.filledCircle(getX(),getY(),getSize());
     }
 
 

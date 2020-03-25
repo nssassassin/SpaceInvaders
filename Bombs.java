@@ -12,14 +12,10 @@ public class Bombs extends DefaultCritter{
     }
 
 
-    public void action(){
-        super.action();
-    }
 
 
-    public double getSize() {
-        return super.getSize();
-    }
+
+
 
     public void drawBomb(){
         StdDraw.picture(getX(),getY(), "nuclear-36817_1280.png",getSize()*2,getSize()*2);

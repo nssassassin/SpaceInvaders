@@ -11,9 +11,7 @@ public class PowerUp extends DefaultCritter {
 
     }
 
-    public int getTypePower() {
-        return typePower;
-    }
+
 
     public int powerUpUsed(Shooter shooter, ArrayList<Missile> missile1){
         if((shooter.getX()-shooter.getSize() <=  getX()+getSize()&&

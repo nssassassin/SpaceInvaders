@@ -75,7 +75,8 @@ public class InvaderGameState {
                                    Shooter shooter,
                                    ArrayList<Missile> missiles,
                                    ArrayList<Bombs> bombs,
-                                   Critter[] critters) {
+                                   Critter[] critters,
+                                   ArrayList<Bunkers> bunkers) {
 
 
         StdDraw.setXscale(-1.0, 1.0);
@@ -251,6 +252,22 @@ public class InvaderGameState {
             StdDraw.save("screenshot.png");
         }
 
+        //draw bunkers
+        for(int i=0;i<bunkers.size();i++){
+            bunkers.get(i).drawBunkers();
+            for(int j=0;j<bombs.size();j++){
+                if(bunkers.get(i).hitBomb(bombs.get(j))){
+                    bunkers.get(i).setHitPoints(bunkers.get(i).getHitPoints()-100);
+                    bombs.remove(j);
+                    StdAudio.play("explosion.wav");
+                    break;
+                }
+            }
+            if(bunkers.get(i).getHitPoints()==0){
+                bunkers.remove(i);
+                break;
+            }
+        }
 
         //draw missiles and move and execute logic
         for(int g = 0; g< missiles.size(); g++) {
@@ -344,6 +361,14 @@ public class InvaderGameState {
                 }
 
             }
+            //check for bunker impact
+            for(int k = 0;k<bunkers.size();k++){
+                if(!critters[j].isKilled()&&bunkers.get(k).checkCritter(critters[j])){
+                    critters[j].setKilled(true);
+                    bunkers.remove(k);
+                    break;
+                }
+            }
         }
 
 
@@ -374,6 +399,9 @@ public class InvaderGameState {
                 Invaders.endMenu = true;
             }
         }
+
+
+
 
 
 

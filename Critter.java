@@ -37,6 +37,7 @@ public class Critter extends DefaultCritter{
     }
 
 
+
     public void drawCritter(){
         StdDraw.picture(super.getX(),super.getY(), "gth.png",super.getSize()*2,super.getSize()*2);
     }
@@ -47,3 +48,4 @@ SVG ID: 67049
 License: Public Domain
 
  */
+

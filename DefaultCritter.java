@@ -22,7 +22,9 @@ public class DefaultCritter{
     public static final double shooterTurnSpeed = 2.5;
     public static final double powerUpChance = 0.01;
     public static final double powerUpTimeOut = 5000;
+    public static final double bunkerSize = 0.1;
     public static final int enemyHitPoints = 1000;
+    public static final int bunkerHitPoints = 500;
     public static final int lives = 3;
     public static final int levels = 3;
     public static final int critterCount = 14; //multiples of 7, will be divided into rows

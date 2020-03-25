@@ -12,12 +12,12 @@ public class Enemy extends DefaultCritter{
     }
 
     public void moveEnemy(){
-        if(super.getX()<1-super.getSize()&&super.getX()>-1+super.getSize()){
-            super.action();
+        if(getX()<1-getSize()&&getX()>-1+getSize()){
+            action();
         }
         else{
-            super.setSpeedX(-super.getSpeedX());
-            super.action();
+            setSpeedX(-getSpeedX());
+            action();
         }
     }
 
@@ -26,17 +26,17 @@ public class Enemy extends DefaultCritter{
     }
 
     public boolean hitMissile(Missile missile1){
-        if( missile1.getMissilesYTop()>=super.getY()-super.getSize()&&
-                missile1.getMissilesYTop()<=super.getY()+super.getSize()&&
-                missile1.getX()>=super.getX()-super.getSize()&&
-                missile1.getX()<=super.getX()+super.getSize()){
+        if( missile1.getMissilesYTop()>=getY()-getSize()&&
+                missile1.getMissilesYTop()<=getY()+getSize()&&
+                missile1.getX()>=getX()-getSize()&&
+                missile1.getX()<=getX()+getSize()){
             return true;
         }
         else return false;
     }
 
     public void drawEnemy(){
-        StdDraw.picture(super.getX(),super.getY(), "ufo-42453_1280.png",super.getSize()*2,super.getSize()*2);
+        StdDraw.picture(getX(),getY(), "ufo-42453_1280.png",getSize()*2,getSize()*2);
     }
 
     public void setHitPoints(int hitPoints) {
