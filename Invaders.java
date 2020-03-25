@@ -19,6 +19,7 @@ public class Invaders {
     public static double tempSpeed = DefaultCritter.shooterSpeed;
     public static double missileTime = DefaultCritter.MissileDelay;
     public static PowerUp powerUp1 = null;
+    public static int bombsHit = 0;
 
     public static void main(String[] args) {
 
@@ -61,6 +62,8 @@ public class Invaders {
                 winOrLose = 0;
                 previousMissileTime = 0;
                 myCurrentScore = 0;
+                bombsHit = 0;
+                powerUpTime = 0;
                 tempSpeed = DefaultCritter.shooterSpeed;
                 missileTime = DefaultCritter.MissileDelay;
                 while (isRunning) {

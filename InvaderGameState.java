@@ -100,6 +100,7 @@ public class InvaderGameState {
                     StdOut.println("Removed Bomb and missile");
                     count = count + 1;
                     System.out.println(count);
+                    Invaders.bombsHit++;
 
                     break;
                 }
@@ -141,10 +142,10 @@ public class InvaderGameState {
             Invaders.missileTime = DefaultCritter.MissileDelay;
 
         }
-        else{
+        else if(Invaders.powerUpTime!=0){
             StdDraw.setFont(DefaultCritter.font2);
             StdDraw.setPenColor(StdDraw.WHITE);
-            StdDraw.text(0,0.75, "PowerUp left: " + (int)(500 - (0.1 * (System.currentTimeMillis()-Invaders.powerUpTime))));
+            StdDraw.text(0,1.04, "PowerUp left: " + (int)((0.001*(5000 - ((System.currentTimeMillis()-Invaders.powerUpTime))))+1) + "s");
         }
 
 
@@ -390,10 +391,10 @@ public class InvaderGameState {
         }
         StdDraw.setPenColor(StdDraw.RED);
         StdDraw.setFont();
-        StdDraw.textRight(0.95, 1.1, "Enemy Hitpoints: " + enemy.getHitPoints());
-        Invaders.myCurrentScore = (myCounter*1000 + 100*(DefaultCritter.enemyHitPoints*Invaders.level - enemy.getHitPoints()));
-        StdDraw.textLeft(-0.95,1.1, "Score: " + Invaders.myCurrentScore);
-        StdDraw.text(0, 1.1, "Level " + Invaders.level);
+        StdDraw.textRight(0.95, 1.15, "Enemy Hitpoints: " + enemy.getHitPoints());
+        Invaders.myCurrentScore = (myCounter*1000 +  Invaders.bombsHit *500 + 100*(DefaultCritter.enemyHitPoints*Invaders.level - enemy.getHitPoints()));
+        StdDraw.textLeft(-0.95,1.15, "Score: " + Invaders.myCurrentScore);
+        StdDraw.text(0, 1.15, "Level " + Invaders.level);
         switch (Invaders.level){
             case 1:
                 Invaders.myScore1 = Invaders.myCurrentScore;
@@ -407,7 +408,7 @@ public class InvaderGameState {
         }
 
 
-        StdDraw.text(-0.35, 1.1, "Lives: " + shooter.getLives());
+        StdDraw.text(-0.35, 1.15, "Lives: " + shooter.getLives());
 
 
         StdDraw.show();
