@@ -24,7 +24,7 @@ public class InvaderGameState {
             StdDraw.text(0,-0.2,"Rotate: Left (a), Right (d), Release to stop");
             StdDraw.text(0,-0.4,"Move: Left (z), Right (c), Release to stop");
             StdDraw.text(0,-0.6,"Quit (q), in game q will end game and return to menu");
-            StdDraw.text(0,-0.8, "ScreenCapture (q)");
+            StdDraw.text(0,-0.8, "ScreenCapture (p)");
 
             if(StdDraw.isKeyPressed(KeyEvent.VK_SPACE)){
                 Invaders.menuRunning = false;
@@ -105,10 +105,48 @@ public class InvaderGameState {
                 }
             }
             if(count>0){
-                //System.out.println("Did break and hopefully stop loop");
+
                 break;
             }
         }
+
+        //Spawn a PowerUp at a random chance
+
+        if(Math.random()<DefaultCritter.powerUpChance&&Invaders.powerUp1==null&&Invaders.powerUpTime+DefaultCritter.powerUpTimeOut<=System.currentTimeMillis()){
+            Invaders.powerUp1 = new PowerUp() ;
+
+        }
+
+        //draw powerUp
+        if(Invaders.powerUp1 != null){
+            Invaders.powerUp1.drawPowerUp();
+            if(Invaders.powerUp1.powerUpUsed(shooter, missiles)!=0){
+                switch(Invaders.powerUp1.powerUpUsed(shooter, missiles)){
+                    case 1:
+                        Invaders.tempSpeed = DefaultCritter.shooterSpeed*3;
+                        break;
+                    case 2:
+                        Invaders.missileTime = 100;
+                        break;
+                }
+
+
+                Invaders.powerUpTime = System.currentTimeMillis();
+                Invaders.powerUp1 = null;
+            }
+        }
+        if(Invaders.powerUpTime+DefaultCritter.powerUpTimeOut<=System.currentTimeMillis()){
+            //resets all changes
+            Invaders.tempSpeed = DefaultCritter.shooterSpeed;
+            Invaders.missileTime = DefaultCritter.MissileDelay;
+
+        }
+        else{
+            StdDraw.setFont(DefaultCritter.font2);
+            StdDraw.setPenColor(StdDraw.WHITE);
+            StdDraw.text(0,0.75, "PowerUp left: " + (int)(500 - (0.1 * (System.currentTimeMillis()-Invaders.powerUpTime))));
+        }
+
 
 
         //move the enemy ship
@@ -176,7 +214,7 @@ public class InvaderGameState {
         }
 
         if(StdDraw.isKeyPressed(87)){
-            if(System.currentTimeMillis() >= Invaders.previousMissileTime + DefaultCritter.MissileDelay) {
+            if(System.currentTimeMillis() >= Invaders.previousMissileTime + Invaders.missileTime) {
 
                 missiles.add(new Missile(shooter.getX(), shooter.getY(), shooter.getAngleOfGun()));
                 StdAudio.play("344310__musiclegends__laser-shoot.wav");

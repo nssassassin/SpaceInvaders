@@ -5,24 +5,12 @@ public class Bombs extends DefaultCritter{
         super(xInput, yInput, 0, speed, DefaultCritter.bombSize);
     }
 
-    public double getX() {
-        return super.getX();
-    }
 
-    public double getY() {
-        return super.getY();
-    }
 
     public double getBombYBottom() {
         return super.getY() - super.getSize();
     }
 
-    public double getSpeedX() {
-        return super.getSpeedX();
-    }
-    public double getSpeedY() {
-        return super.getSpeedY();
-    }
 
     public void action(){
         super.action();
@@ -34,7 +22,7 @@ public class Bombs extends DefaultCritter{
     }
 
     public void drawBomb(){
-        StdDraw.picture(super.getX(),super.getY(), "nuclear-36817_1280.png",super.getSize()*2,super.getSize()*2);
+        StdDraw.picture(getX(),getY(), "nuclear-36817_1280.png",getSize()*2,getSize()*2);
     }
 
     public boolean hitMissile(Missile missile1){

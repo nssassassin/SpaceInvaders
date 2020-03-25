@@ -12,17 +12,7 @@ public class Missile extends DefaultCritter{
     /*The following code makes the private code accessible
     * IntelliJ also automatically inserts this based on the private variables*/
 
-    public double getX() {
-        return super.getX();
-    }
 
-    public double getY() {
-        return super.getY();
-    }
-
-    public double getSize() {
-        return super.getSize();
-    }
 
     public double getMissilesYTop() {
         return (super.getY() + super.getSize());
@@ -33,9 +23,6 @@ public class Missile extends DefaultCritter{
     public double getMissilesXMin() { return super.getX() - super.getSize();}
 
 
-    public void action(){
-        super.action();
-    }
 
     public void drawMissile(){
         StdDraw.setPenColor(StdDraw.MAGENTA);

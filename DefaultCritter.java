@@ -19,19 +19,18 @@ public class DefaultCritter{
     public static final double shooterSize = 0.05;
     public static final double shooterSpeed = 0.01;
     public static final double MissileDelay = 800;
-    public static final double shooterTurnSpeed = 2.5; //degrees per round
+    public static final double shooterTurnSpeed = 2.5;
+    public static final double powerUpChance = 0.01;
+    public static final double powerUpTimeOut = 5000;
     public static final int enemyHitPoints = 1000;
     public static final int lives = 3;
     public static final int levels = 3;
     public static final int critterCount = 14; //multiples of 7, will be divided into rows
-    public static final int timeDelayEnd = 3000;
+    public static final int timeDelayEnd = 2000;
+
 
     public static final Font font2 = new Font("Slightly larger Arial", Font.PLAIN, 19);
     public static final Font font = new Font("Arial", Font.BOLD, 50);
-
-
-
-
 
 
         public DefaultCritter(double xIn, double yIn, double xSpeed, double ySpeed, double sizeIn){

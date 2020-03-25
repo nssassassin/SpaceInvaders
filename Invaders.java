@@ -15,27 +15,14 @@ public class Invaders {
     public static boolean endMenu = false;
     public static String EndCredits;
     public static int level= 1;
+    public static long powerUpTime;
+    public static double tempSpeed = DefaultCritter.shooterSpeed;
+    public static double missileTime = DefaultCritter.MissileDelay;
+    public static PowerUp powerUp1 = null;
 
     public static void main(String[] args) {
 
-        //print default values
-        /*
-        StdOut.println("Enemy Size; " + DefaultCritter.enemySize);
-        StdOut.println("Critter Size; " + DefaultCritter.critterSize);
-        StdOut.println("Critter Speed; " + DefaultCritter.critterSpeed);
-        StdOut.println("Enemy Speed; " + DefaultCritter.enemySpeed);
-        StdOut.println("Bomb Size; " + DefaultCritter.bombSize);
-        StdOut.println("Bomb Chance; " + DefaultCritter.chanceOfBomb);
-        StdOut.println("Missile Speed; " + DefaultCritter.missileSpeed);
-        StdOut.println("Missile Size; " + DefaultCritter.missileSize);
-        StdOut.println("Bomb Speed; " + DefaultCritter.bombSpeed);
-        StdOut.println("Shooter Size; " + DefaultCritter.shooterSize);
-        StdOut.println("Shooter Speed; " + DefaultCritter.shooterSpeed);
-        StdOut.println("Missile Delay; " + DefaultCritter.MissileDelay);
-        StdOut.println("Enemy HitPoints; " + DefaultCritter.enemyHitPoints);
-        StdOut.println("Shooter Turn Speed; " + DefaultCritter.shooterTurnSpeed);
-        StdOut.println("Lives; " + DefaultCritter.lives);
-        */
+
         StdAudio.loop("TremLoadingloopl.wav");
 
 
@@ -63,31 +50,25 @@ public class Invaders {
 
                 ArrayList<Bombs> newBomb = new ArrayList<Bombs>();
 
-
-
-
-
-
-
                 //create critter array
                 for (int k = 0; k < DefaultCritter.critterCount * level / 7; k++) {
                     for (int j = 0; j < 7; j++) {
                         newCritter[(j + k * 7)] = new Critter((-1+2*DefaultCritter.critterSize + 2 * DefaultCritter.critterSize * j), (1 - 2 * DefaultCritter.enemySize - DefaultCritter.critterSize - 2 * DefaultCritter.critterSize * k));
                     }
                 }
-
                 /////////////////////////////////////////////
                 if(winOrLose!=0) isRunning = true;
                 winOrLose = 0;
                 previousMissileTime = 0;
                 myCurrentScore = 0;
+                tempSpeed = DefaultCritter.shooterSpeed;
+                missileTime = DefaultCritter.MissileDelay;
                 while (isRunning) {
                     InvaderGameState.drawTheGame(newEnemy, newShooter, newMissile, newBomb, newCritter);
 
                 }
                 StdOut.println(level + " "+ winOrLose + myScore1 + " "+ myScore2 + " "+ myScore3 );
                 level++;
-
 
             }
             ///////////////////////////////////////

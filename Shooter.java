@@ -19,25 +19,6 @@ public class Shooter extends DefaultCritter{
     }
 
 
-    public double getX() {
-        return super.getX();
-    }
-
-    public double getY() {
-        return super.getY();
-    }
-
-    public double getSpeedX() {
-        return super.getSpeedX();
-    }
-
-    public double getSpeedY() {
-        return super.getSpeedY();
-    }
-
-    public double getSize() {
-        return super.getSize();
-    }
 
     public void setMoveLeft(boolean moveLeft) {
         this.moveLeft = moveLeft;
@@ -73,10 +54,10 @@ public class Shooter extends DefaultCritter{
     public void moveShooter() {
         //first the base movement
         if(moveRight&&getX()<1-getSize()){
-            super.setSpeedX(DefaultCritter.shooterSpeed);
+            super.setSpeedX(Invaders.tempSpeed);
         }
         else if(moveLeft&&getX()>-1 + getSize()){
-            super.setSpeedX(-DefaultCritter.shooterSpeed);
+            super.setSpeedX(-Invaders.tempSpeed);
         }
         else {
             super.setSpeedX(0);
