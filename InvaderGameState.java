@@ -376,7 +376,7 @@ public class InvaderGameState {
 
         //shooter check if hit by bombs
         for(int i = 0; i < bombs.size(); i++){
-            if(shooter.hitBomb(bombs.get(i))||shooter2.hitBomb(bombs.get(i))){
+            if(shooter.hitBomb(bombs.get(i))||(Invaders.multiPlayer&&shooter2.hitBomb(bombs.get(i)))){
                 bombs.remove(i);
                 shooter.removeLives();
                 StdAudio.play("explosion.wav");
