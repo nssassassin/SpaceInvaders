@@ -1,4 +1,3 @@
-
 public class Critter extends DefaultCritter{
     private boolean isKilled;
 

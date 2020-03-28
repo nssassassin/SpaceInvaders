@@ -6,6 +6,7 @@ public class Invaders {
 
     public static boolean isRunning = false;
     public static long  previousMissileTime;
+    public static long delayBeforeRepeat;
     public static int winOrLose;
     public static double myCurrentScore;
     public static double myScore1 =0;
@@ -34,13 +35,15 @@ public class Invaders {
         while(true) {
             StdDraw.setCanvasSize(600,600);
 
-
+            //menu reset
             myScore1 = 0;
             myScore2 = 0;
             myScore3 = 0;
             level = 1;
             multiPlayer = false;
             Shooter shooter2 = null;
+            delayBeforeRepeat = 0;
+
 
 
             InvaderGameState.ThrowTheMenu(menuRunning);

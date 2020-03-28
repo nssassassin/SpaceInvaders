@@ -29,6 +29,7 @@ public class DefaultCritter{
     public static final int levels = 3;
     public static final int critterCount = 14; //multiples of 7, will be divided into rows
     public static final int timeDelayEnd = 2000;
+    public static final String filename = "HighScores.txt";
 
 
     public static final Font font2 = new Font("Slightly larger Arial", Font.PLAIN, 19);

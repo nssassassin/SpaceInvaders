@@ -26,6 +26,8 @@ public class InvaderGameState {
             StdDraw.text(0,0.3,"Move: Left (z), Right (c), Release to stop");
             StdDraw.text(0,0.2,"Quit (q), in game q will end game and return to menu");
             StdDraw.text(0,0.1, "ScreenCapture (p)");
+            StdDraw.text(0,-0.6, "Reset Scores (R)");
+
             String text1;
             if(Invaders.multiPlayer){
                 text1 = "Enabled";
@@ -46,9 +48,9 @@ public class InvaderGameState {
             StdDraw.text(0, -0.1, "MultiPlayer: " + text1);
             StdDraw.setFont();
             StdDraw.setPenColor(Color.WHITE);
-            StdDraw.text(0, -0.9, "Only player 1 can get PowerUps and get killed");
+            StdDraw.text(0, -0.85, "Only player 1 can get killed");
             StdDraw.text(0, -0.95, "Players share lives");
-            StdDraw.text(0, -0.9, "");
+
 
             if(StdDraw.isKeyPressed(KeyEvent.VK_SPACE)){
                 Invaders.menuRunning = false;
@@ -66,6 +68,12 @@ public class InvaderGameState {
                     Invaders.multiPlayer = false;
             }
 
+            if((StdDraw.isKeyPressed(KeyEvent.VK_R))&& System.currentTimeMillis()-Invaders.delayBeforeRepeat>=2000){
+                System.out.println("Reset the scores to 0");
+                FileManager fileman1 = new FileManager();
+                fileman1.resetScores(DefaultCritter.filename);
+                Invaders.delayBeforeRepeat = System.currentTimeMillis();
+            }
             if(StdDraw.isKeyPressed(KeyEvent.VK_Q)){
                 StdOut.println("Exit game and system");
                 System.exit(0);
@@ -75,13 +83,12 @@ public class InvaderGameState {
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static void ThrowEndScreen(){ //boolean endScreen
-        //while(endScreen){
+    public static void ThrowEndScreen(){
         StdDraw.clear();
         StdDraw.enableDoubleBuffering();
         StdDraw.clear(StdDraw.BLACK);
         StdDraw.setFont(DefaultCritter.font);
-        StdDraw.setPenColor(StdDraw.WHITE);
+        StdDraw.setPenColor(StdDraw.RED);
         StdDraw.picture(0, 0.1, "cosmos-background.jpg", 2, 2.2);
         switch (Invaders.winOrLose){
             case 0: Invaders.EndCredits = "QUIT";
@@ -91,8 +98,21 @@ public class InvaderGameState {
             case 2: Invaders.EndCredits = "LOSS";
                 break;
         }
-        StdDraw.text(0, 0.5, Invaders.EndCredits);
-        StdDraw.text(0,0.2,"Score: " + ((Invaders.myScore3+ Invaders.myScore2+ Invaders.myScore1)));
+        StdDraw.text(0, 0.1, Invaders.EndCredits);
+        StdDraw.setPenColor(StdDraw.WHITE);
+        StdDraw.text(0, 0.9, "HIGH SCORES:");
+
+
+        //Read from file list and check to see if score fits then Display
+        FileManager newFileManager = new FileManager();
+        Double[] tempHighScore;
+        tempHighScore = newFileManager.getHighScoreList(DefaultCritter.filename,
+                (Invaders.myScore3+ Invaders.myScore2+ Invaders.myScore1));
+        StdDraw.textLeft(-0.5, 0.7, "1. " + tempHighScore[2]);
+        StdDraw.textLeft(-0.5, 0.5, "2. " + tempHighScore[1]);
+        StdDraw.textLeft(-0.5, 0.3, "3. " + tempHighScore[0] );
+
+        StdDraw.text(0,-0.2,"Score: " + ((Invaders.myScore3+ Invaders.myScore2+ Invaders.myScore1)));
         StdDraw.show();
         StdDraw.pause(DefaultCritter.timeDelayEnd);
         Invaders.menuRunning = true;
